@@ -1,6 +1,5 @@
 package com.geniusmart.loveut;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +22,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testMain() throws Exception {
-        MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
+        MainActivity2 mainActivity = Robolectric.setupActivity(MainActivity2.class);
         TextView view = (TextView) mainActivity.findViewById(R.id.textview);
         String s = view.getText().toString();
         assertEquals(s, "Hello World!");
@@ -31,14 +30,14 @@ public class ExampleUnitTest {
 
     @Test
     public void testLife(){
-        ActivityController<MainActivity> activityController = Robolectric.buildActivity(MainActivity.class).create();
+        ActivityController<MainActivity2> activityController = Robolectric.buildActivity(MainActivity2.class).create();
         activityController.resume();
     }
 
     @Test
     public void testResource(){
         Context context = RuntimeEnvironment.application;
-        MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
+        MainActivity2 mainActivity = Robolectric.setupActivity(MainActivity2.class);
         TextView view = (TextView) mainActivity.findViewById(R.id.textview);
         FloatingActionButton fab = (FloatingActionButton) mainActivity.findViewById(R.id.fab);
         fab.performClick();
@@ -48,7 +47,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testForward(){
-        MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
+        MainActivity2 mainActivity = Robolectric.setupActivity(MainActivity2.class);
         FloatingActionButton fab = (FloatingActionButton) mainActivity.findViewById(R.id.fab);
         fab.performClick();
 
