@@ -1,8 +1,11 @@
-package com.geniusmart.loveut;
+package com.geniusmart.loveut.activity;
 
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.geniusmart.loveut.BuildConfig;
+import com.geniusmart.loveut.R;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(constants = BuildConfig.class)
 public class LoginActivityTest {
 
     private EditText emailView;
@@ -36,8 +39,8 @@ public class LoginActivityTest {
 
     @Test
     public void loginSuccess() {
-        emailView.setText("foo@example.com");
-        passwordView.setText("foo");
+        emailView.setText("geniusmart");
+        passwordView.setText("123");
         button.performClick();
 
         ShadowApplication application = ShadowApplication.getInstance();

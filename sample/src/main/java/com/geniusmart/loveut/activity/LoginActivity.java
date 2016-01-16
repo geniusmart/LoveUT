@@ -1,4 +1,4 @@
-package com.geniusmart.loveut;
+package com.geniusmart.loveut.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.geniusmart.loveut.R;
 
 public class LoginActivity extends Activity {
     /**
