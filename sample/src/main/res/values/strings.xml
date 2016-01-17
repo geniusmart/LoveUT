@@ -17,4 +17,17 @@
         completions."
     </string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_simple">SimpleActivity</string>
+    <string name="sample_demo">官方demo</string>
+    <string name="sample_lifecycle_label">当前触发的生命周期为：</string>
+    <string name="sample_lifecycle_oncreate">onCreate</string>
+    <string name="sample_lifecycle_onResume">onResume</string>
+    <string name="sample_lifecycle_onDestroy">onDestroy</string>
+    <string name="sample_forward">Activity跳转</string>
+    <string name="sample_dialog">Dialog测试</string>
+    <string name="sample_toast">Toast测试</string>
+    <string name="sample_state">控件状态测试</string>
+    <string name="sample_checkbox">点击按钮反选</string>
+    <string name="dialog_message">message</string>
+    <string name="dialog_title">title</string>
 </resources>

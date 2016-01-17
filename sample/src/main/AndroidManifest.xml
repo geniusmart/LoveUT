@@ -8,21 +8,15 @@
         android:theme="@style/Theme.MyTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main"></activity>
-
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
             android:name=".service.SampleIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <receiver
             android:name=".receiver.AlarmManagerReceiver"
@@ -37,6 +31,16 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activity.SampleActivity"
+            android:label="@string/title_activity_simple">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
