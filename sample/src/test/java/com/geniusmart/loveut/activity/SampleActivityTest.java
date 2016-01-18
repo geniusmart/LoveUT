@@ -1,13 +1,17 @@
 package com.geniusmart.loveut.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.geniusmart.loveut.BuildConfig;
+import com.geniusmart.loveut.receiver.MyReceiver;
 import com.geniusmart.loveut.R;
 
 import org.junit.Before;
@@ -17,6 +21,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowToast;
 import org.robolectric.util.ActivityController;
@@ -84,13 +89,20 @@ public class SampleActivityTest {
      */
     @Test
     public void testToast(){
+        //点击按钮，出现吐司
         toastBtn.performClick();
         assertEquals(ShadowToast.getTextOfLatestToast(),"we love UT");
     }
 
+    /**
+     * Dialog的测试
+     */
     @Test
     public void testDialog(){
+        //点击按钮，出现对话框
         dialogBtn.performClick();
+        AlertDialog latestAlertDialog = ShadowAlertDialog.getLatestAlertDialog();
+        assertNotNull(latestAlertDialog);
     }
 
     /**
@@ -119,6 +131,27 @@ public class SampleActivityTest {
         String appName = application.getString(R.string.app_name);
         String activityTitle = application.getString(R.string.title_activity_simple);
         assertEquals("LoveUT", appName);
-        assertEquals("SimpleActivity",activityTitle);
+        assertEquals("SimpleActivity", activityTitle);
+    }
+
+    /**
+     * 测试广播
+     */
+    @Test
+    public void testBoradcast(){
+        ShadowApplication shadowApplication = ShadowApplication.getInstance();
+
+        String action = "com.geniusmart.loveut.login";
+        Intent intent = new Intent(action);
+        intent.putExtra("EXTRA_USERNAME", "geniusmart");
+
+        //测试是否注册广播接收者
+        assertTrue(shadowApplication.hasReceiverForIntent(intent));
+
+        //以下测试广播接受者的处理逻辑是否正确
+        MyReceiver myReceiver = new MyReceiver();
+        myReceiver.onReceive(RuntimeEnvironment.application,intent);
+        SharedPreferences preferences = shadowApplication.getSharedPreferences("account", Context.MODE_PRIVATE);
+        assertEquals("geniusmart",preferences.getString("USERNAME", ""));
     }
 }
