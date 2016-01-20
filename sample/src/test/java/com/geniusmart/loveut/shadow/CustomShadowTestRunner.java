@@ -13,24 +13,11 @@ public class CustomShadowTestRunner extends RobolectricGradleTestRunner {
     @Override
     public InstrumentationConfiguration createClassLoaderConfig() {
         InstrumentationConfiguration.Builder builder = InstrumentationConfiguration.newBuilder();
+        /**
+         * 添加要进行Shadow的对象
+         */
         builder.addInstrumentedClass(Person.class.getName());
         return builder.build();
     }
-
-   /* @Override
-    public InstrumentationConfiguration createClassLoaderConfig() {
-        InstrumentationConfiguration.Builder builder = InstrumentationConfiguration.newBuilder();
-        builder.addInstrumentedPackage("com.geniusmart.loveut.shadow");
-        return builder.build();
-    }*/
-
-   /* @Override
-    protected ShadowMap createShadowMap() {
-        return super.createShadowMap()
-                .newBuilder()
-                .addShadowClass(ShadowPerson.class)
-                .build();
-    }*/
-
 }
 
