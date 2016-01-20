@@ -5,7 +5,6 @@ import com.geniusmart.loveut.BuildConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
-import org.robolectric.internal.ShadowExtractor;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -17,7 +16,7 @@ public class ShadowTest {
     public void testGetName(){
         Person person = new Person();
         //Person person = new Person();
-        ShadowExtractor.extract(person);
+        //ShadowExtractor.extract(person);
         assertEquals("geniusmart", person.getName());
     }
 

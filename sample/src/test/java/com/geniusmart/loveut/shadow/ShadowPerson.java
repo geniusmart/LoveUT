@@ -18,6 +18,6 @@ public class ShadowPerson {
 
     @Implementation
     public String getName() {
-        return person.getName()+"geniusmart";
+        return "geniusmart";
     }
 }
