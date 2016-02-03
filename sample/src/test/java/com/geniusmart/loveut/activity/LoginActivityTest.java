@@ -39,7 +39,7 @@ public class LoginActivityTest {
 
     @Test
     public void loginSuccess() {
-        emailView.setText("geniusmart");
+        emailView.setText("zhangzhan35@gmail.com");
         passwordView.setText("123");
         button.performClick();
 

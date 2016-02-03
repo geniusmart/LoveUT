@@ -12,9 +12,17 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/sample_demo"
+        android:id="@+id/sample_demo"
+        android:layout_alignParentTop="true"
+        android:onClick="showDemo"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/sample_forward"
         android:id="@+id/btn_forward"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/sample_demo"
         android:onClick="forward"/>
 
     <Button
@@ -36,10 +44,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sample_demo"
-        android:id="@+id/sample_demo"
-        android:layout_below="@+id/btn_toast"
-        android:onClick="showDemo"/>
+        android:text="@string/sample_state"
+        android:onClick="inverse"
+        android:id="@+id/btn_inverse"
+        android:layout_below="@+id/btn_toast"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_checkbox"
+        android:id="@+id/checkbox"
+        android:layout_alignTop="@+id/btn_inverse"
+        android:layout_centerHorizontal="true"
+        android:checked="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,22 +71,5 @@
         android:id="@+id/tv_lifecycle_value"
         android:layout_alignTop="@+id/tv_lifecycle_label"
         android:layout_toRightOf="@+id/tv_lifecycle_label" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_state"
-        android:onClick="inverse"
-        android:id="@+id/btn_inverse"
-        android:layout_below="@+id/sample_demo"/>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_checkbox"
-        android:id="@+id/checkbox"
-        android:layout_alignTop="@+id/btn_inverse"
-        android:layout_centerHorizontal="true"
-        android:checked="false" />
 
 </RelativeLayout>
