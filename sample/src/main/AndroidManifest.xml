@@ -11,7 +11,7 @@
             android:label="@string/title_activity_main" />
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
 
         <service
             android:name=".service.SampleIntentService"
@@ -46,7 +46,7 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.geniusmart.loveut.login"/>
+                <action android:name="com.geniusmart.loveut.login" />
             </intent-filter>
         </receiver>
     </application>

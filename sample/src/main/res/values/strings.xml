@@ -28,6 +28,8 @@
     <string name="sample_toast">Toast测试</string>
     <string name="sample_state">控件状态测试</string>
     <string name="sample_checkbox">点击按钮反选</string>
-    <string name="dialog_message">message</string>
-    <string name="dialog_title">title</string>
+    <string name="sample_dialog_message">消息内容</string>
+    <string name="sample_dialog_title">标题</string>
+
+    <string name="sample_fragment">fragment区域</string>
 </resources>

@@ -11,8 +11,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.geniusmart.loveut.BuildConfig;
-import com.geniusmart.loveut.receiver.MyReceiver;
 import com.geniusmart.loveut.R;
+import com.geniusmart.loveut.fragment.SampleFragment;
+import com.geniusmart.loveut.receiver.MyReceiver;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -150,8 +151,21 @@ public class SampleActivityTest {
 
         //以下测试广播接受者的处理逻辑是否正确
         MyReceiver myReceiver = new MyReceiver();
-        myReceiver.onReceive(RuntimeEnvironment.application,intent);
+        myReceiver.onReceive(RuntimeEnvironment.application, intent);
         SharedPreferences preferences = shadowApplication.getSharedPreferences("account", Context.MODE_PRIVATE);
         assertEquals("geniusmart",preferences.getString("USERNAME", ""));
+    }
+
+    @Test
+    public void testFragment(){
+        //FragmentTestUtil.startFragment(sampleActivity.getSupportFragmentManager().findFragmentById(R.id.fragment));
+
+
+        SampleFragment sampleFragment = new SampleFragment();
+        //SupportFragmentTestUtil.startFragment(sampleFragment);
+
+        //Fragment fragment = sampleActivity.getSupportFragmentManager().findFragmentById(R.id.fragment);
+        assertNotNull(sampleFragment);
+
     }
 }

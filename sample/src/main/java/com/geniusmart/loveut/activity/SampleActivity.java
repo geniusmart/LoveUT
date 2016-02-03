@@ -1,9 +1,9 @@
 package com.geniusmart.loveut.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.geniusmart.loveut.R;
 
-public class SampleActivity extends Activity {
+public class SampleActivity extends FragmentActivity {
 
     private TextView lifecycleTextView;
     private CheckBox inverseCheckBox;
@@ -33,8 +33,8 @@ public class SampleActivity extends Activity {
     }
 
     public void showDialog(View view){
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setMessage(R.string.dialog_message)
-                .setTitle(R.string.dialog_title).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setMessage(R.string.sample_dialog_message)
+                .setTitle(R.string.sample_dialog_title).create();
         alertDialog.show();
     }
 

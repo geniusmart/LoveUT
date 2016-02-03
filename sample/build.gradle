@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.geniusmart.loveut"
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -25,4 +25,7 @@ dependencies {
     testCompile "org.mockito:mockito-core:1.9.5"
     testCompile "org.robolectric:robolectric:3.0"
     testCompile 'org.robolectric:robolectric-annotations:3.0'
+    //robolectric针对support-v4的shadows
+    testCompile "org.robolectric:shadows-support-v4:3.0"
+    compile 'com.android.support:support-v4:21.0.3'
 }
