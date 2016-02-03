@@ -25,6 +25,7 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowToast;
+import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 import org.robolectric.util.ActivityController;
 
 import static junit.framework.Assert.assertEquals;
@@ -66,7 +67,7 @@ public class SampleActivityTest {
         ActivityController<SampleActivity> activityController = Robolectric.buildActivity(SampleActivity.class).create().start();
         Activity activity = activityController.get();
         TextView textview = (TextView) activity.findViewById(R.id.tv_lifecycle_value);
-        assertEquals("onCreate",textview.getText().toString());
+        assertEquals("onCreate", textview.getText().toString());
         activityController.resume();
         assertEquals("onResume", textview.getText().toString());
         activityController.destroy();
@@ -89,17 +90,17 @@ public class SampleActivityTest {
      * Toast的测试
      */
     @Test
-    public void testToast(){
+    public void testToast() {
         //点击按钮，出现吐司
         toastBtn.performClick();
-        assertEquals(ShadowToast.getTextOfLatestToast(),"we love UT");
+        assertEquals(ShadowToast.getTextOfLatestToast(), "we love UT");
     }
 
     /**
      * Dialog的测试
      */
     @Test
-    public void testDialog(){
+    public void testDialog() {
         //点击按钮，出现对话框
         dialogBtn.performClick();
         AlertDialog latestAlertDialog = ShadowAlertDialog.getLatestAlertDialog();
@@ -110,7 +111,7 @@ public class SampleActivityTest {
      * 测试控件状态
      */
     @Test
-    public void testViewState(){
+    public void testViewState() {
         CheckBox checkBox = (CheckBox) sampleActivity.findViewById(R.id.checkbox);
         Button inverseBtn = (Button) sampleActivity.findViewById(R.id.btn_inverse);
         assertTrue(inverseBtn.isEnabled());
@@ -139,7 +140,7 @@ public class SampleActivityTest {
      * 测试广播
      */
     @Test
-    public void testBoradcast(){
+    public void testBoradcast() {
         ShadowApplication shadowApplication = ShadowApplication.getInstance();
 
         String action = "com.geniusmart.loveut.login";
@@ -153,19 +154,17 @@ public class SampleActivityTest {
         MyReceiver myReceiver = new MyReceiver();
         myReceiver.onReceive(RuntimeEnvironment.application, intent);
         SharedPreferences preferences = shadowApplication.getSharedPreferences("account", Context.MODE_PRIVATE);
-        assertEquals("geniusmart",preferences.getString("USERNAME", ""));
+        assertEquals("geniusmart", preferences.getString("USERNAME", ""));
     }
 
+    /**
+     * 测试Fragment
+     */
     @Test
-    public void testFragment(){
-        //FragmentTestUtil.startFragment(sampleActivity.getSupportFragmentManager().findFragmentById(R.id.fragment));
-
-
+    public void testFragment() {
         SampleFragment sampleFragment = new SampleFragment();
-        //SupportFragmentTestUtil.startFragment(sampleFragment);
-
-        //Fragment fragment = sampleActivity.getSupportFragmentManager().findFragmentById(R.id.fragment);
-        assertNotNull(sampleFragment);
-
+        //此api可以主动添加Fragment到Activity中，因此会触发Fragment的onCreateView()
+        SupportFragmentTestUtil.startFragment(sampleFragment);
+        assertNotNull(sampleFragment.getView());
     }
 }

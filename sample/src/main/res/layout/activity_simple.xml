@@ -72,11 +72,4 @@
         android:layout_centerHorizontal="true"
         android:checked="false" />
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.geniusmart.loveut.fragment.SampleFragment"
-        android:id="@+id/fragment"
-        android:layout_alignParentBottom="true"/>
-
 </RelativeLayout>
