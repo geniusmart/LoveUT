@@ -1,15 +1,26 @@
 package loveut.geniusmart.com.app;
 
+import com.geniusmart.loveut.app.BuildConfig;
+import com.geniusmart.loveut.model.GithubService;
+import com.geniusmart.loveut.model.Repository;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
-/**
- * To work on unit tests, switch the Test Artifact in the Build Variants view.
- */
+import retrofit2.Call;
+
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21)
 public class ExampleUnitTest {
+
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void git() throws Exception {
+
+        GithubService githubService = GithubService.Factory.create();
+        Call<List<Repository>> call = githubService.publicRepositories("geniusmart");
     }
 }
