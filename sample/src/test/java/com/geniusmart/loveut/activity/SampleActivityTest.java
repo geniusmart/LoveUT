@@ -24,11 +24,16 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
+import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowToast;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 import org.robolectric.util.ActivityController;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -167,4 +172,55 @@ public class SampleActivityTest {
         SupportFragmentTestUtil.startFragment(sampleFragment);
         assertNotNull(sampleFragment.getView());
     }
+
+    /**
+     * 测试DelayedTask
+     */
+    @Test
+    public void testDelayedTask(){
+        Button delayedTaskBtn = (Button) sampleActivity.findViewById(R.id.btn_delay_task);
+        assertFalse(sampleActivity.isTaskFinish);
+        delayedTaskBtn.performClick();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
+        assertTrue(sampleActivity.isTaskFinish);
+    }
+
+    /**
+     * 测试异步线程
+     */
+    @Test
+    public void testThreadTask() throws Exception {
+        Button threadBtn = (Button) sampleActivity.findViewById(R.id.btn_thread);
+        assertFalse(sampleActivity.isTaskFinish);
+        threadBtn.performClick();
+        //sleep(100);
+        //ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
+        //assertTrue(sampleActivity.isTaskFinish);
+        //ShadowLooper.runMainLooperToNextTask();
+        //ShadowLooper.runUiThreadTasks();
+//        Robolectric.flushBackgroundThreadScheduler();
+//        Robolectric.getBackgroundThreadScheduler().advanceBy(0);
+//        Robolectric.getBackgroundThreadScheduler().advanceTo(0);
+//        Robolectric.getBackgroundThreadScheduler().advanceToLastPostedRunnable();
+
+        CountDownLatch latch = new CountDownLatch(1);
+        latch.await(2, TimeUnit.SECONDS);
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
+        /*await().until(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return sampleActivity.isTaskFinish;
+            }
+        });*/
+        assertEquals(sampleActivity.num, 9999);
+    }
+
+    public void sleep(long time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

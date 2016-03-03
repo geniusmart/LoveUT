@@ -27,5 +27,6 @@ dependencies {
     testCompile 'org.robolectric:robolectric-annotations:3.0'
     //robolectric针对support-v4的shadows
     testCompile "org.robolectric:shadows-support-v4:3.0"
+    testCompile "com.jayway.awaitility:awaitility:1.7.0"
     compile 'com.android.support:support-v4:21.0.3'
 }
