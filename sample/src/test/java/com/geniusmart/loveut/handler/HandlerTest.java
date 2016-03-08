@@ -1,8 +1,10 @@
-package com.geniusmart.loveut;
+package com.geniusmart.loveut.handler;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import com.geniusmart.loveut.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.geniusmart.loveut;
+package com.geniusmart.loveut.handler;
 
 public class TestRunnable implements Runnable {
     public boolean wasRun = false;
