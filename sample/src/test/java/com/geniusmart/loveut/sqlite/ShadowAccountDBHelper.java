@@ -26,4 +26,8 @@ public class ShadowAccountDBHelper {
         }
         return mAccountDBHelper;
     }
+
+    public static void reset() {
+        mAccountDBHelper = null;
+    }
 }
