@@ -4,6 +4,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
+        android:name=".LoveUTApplication"
         android:label="@string/app_name"
         android:theme="@style/Theme.MyTheme">
         <activity

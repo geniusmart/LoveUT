@@ -85,9 +85,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="异步线程测试"
-        android:id="@+id/btn_thread"
-        android:onClick="executeThreadTask"
+        android:text="创建DB"
+        android:id="@+id/btn_db"
+        android:onClick="createDB"
         android:layout_below="@+id/btn_delay_task"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

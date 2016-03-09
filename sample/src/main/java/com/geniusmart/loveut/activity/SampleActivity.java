@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geniusmart.loveut.R;
+import com.geniusmart.loveut.sqlite.Account;
+import com.geniusmart.loveut.sqlite.AccountDao;
 
 public class SampleActivity extends FragmentActivity {
 
@@ -61,23 +63,15 @@ public class SampleActivity extends FragmentActivity {
         }, 2000);
     }
 
-    public void executeThreadTask(View view) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                isTaskFinish = true;
-                num = 9999;
-            }
-        }).start();
+    public void createDB(View view) {
+        Account account = new Account();
+        account.id = "1";
+        account.name = "geniusmart";
+        account.email = "loveut@gmail.com";
+        account.password = "123456";
+        AccountDao.isExist(account);
+        Toast.makeText(this,"success",Toast.LENGTH_SHORT).show();
     }
-
-    public int num = 1000;
 
     @Override
     protected void onResume() {
