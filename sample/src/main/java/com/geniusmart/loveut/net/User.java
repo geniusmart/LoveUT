@@ -1,4 +1,4 @@
-package com.geniusmart.loveut.model;
+package com.geniusmart.loveut.net;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,13 +1,11 @@
-package com.geniusmart.loveut.app;
+package com.geniusmart.loveut.net;
 
-import com.geniusmart.loveut.model.GithubService;
-import com.geniusmart.loveut.model.Repository;
+import com.geniusmart.loveut.BuildConfig;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowLooper;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ import static junit.framework.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-public class ExampleUnitTest {
+public class GithubServiceTest {
 
     @Test
     public void git() throws Exception {
@@ -45,8 +43,4 @@ public class ExampleUnitTest {
         //assertTrue(body.size()>0);
     }
 
-    public void other(){
-        ShadowLooper.pauseMainLooper();
-        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
-    }
 }

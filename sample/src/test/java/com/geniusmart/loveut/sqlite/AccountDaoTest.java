@@ -21,10 +21,10 @@ public class AccountDaoTest {
     @Before
     public void tearDown(){
         /*
-            执行每个test时，实例对象要重置为null，否则会出现如下异常：
-            java.lang.RuntimeException: java.lang.IllegalStateException: Illegal connection pointer 37. Current pointers for thread Thread[pool-1-thread-1,5,main] []
-            参考这个issues
-            https://github.com/robolectric/robolectric/issues/1890
+          执行每个test时，实例对象要重置为null，否则会出现如下异常：
+          java.lang.RuntimeException: java.lang.IllegalStateException: Illegal connection pointer 37. Current pointers for thread Thread[pool-1-thread-1,5,main] []
+          参考这个issues
+          https://github.com/robolectric/robolectric/issues/1890
         */
         resetSingleton(AccountDBHelper.class, "mAccountDBHelper");
     }
