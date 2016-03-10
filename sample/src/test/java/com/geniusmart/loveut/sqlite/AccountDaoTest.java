@@ -5,15 +5,17 @@ import com.geniusmart.loveut.BuildConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(DatabaseTestRunner.class)
-@Config(constants = BuildConfig.class, shadows = {ShadowAccountDBHelper.class})
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class)
 public class AccountDaoTest {
 
     @Before
@@ -24,7 +26,7 @@ public class AccountDaoTest {
             参考这个issues
             https://github.com/robolectric/robolectric/issues/1890
         */
-        ShadowAccountDBHelper.reset();
+        resetSingleton(AccountDBHelper.class, "mAccountDBHelper");
     }
 
 
@@ -59,12 +61,24 @@ public class AccountDaoTest {
 
     @Test
     public void query(){
+        AccountDao.deleteAll();
         AccountDao.save(createAccount("3"));
         AccountDao.save(createAccount("4"));
         AccountDao.save(createAccount("5"));
         AccountDao.save(createAccount("5"));
 
         List<Account> accountList = AccountDao.query();
-        assertEquals(accountList.size(),5);
+        assertEquals(accountList.size(), 3);
+    }
+
+    private void resetSingleton(Class clazz, String fieldName) {
+        Field instance;
+        try {
+            instance = clazz.getDeclaredField(fieldName);
+            instance.setAccessible(true);
+            instance.set(null, null);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 }

@@ -43,12 +43,12 @@ public class AccountDao {
         return account;
     }
 
-    public static List<Account> query(){
+    public static List<Account> query() {
         List<Account> list = null;
         Cursor cursor = AccountDBHelper.getInstance().getWritableDatabase().query(AccountTable.TABLE_NAME, null, null, null, null, null, null);
         if (null != cursor) {
             list = new ArrayList<>();
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 Account account = new Account();
                 account.id = cursor.getString(cursor.getColumnIndex(Account.ACCOUNT_ID));
                 account.name = cursor.getString(cursor.getColumnIndex(Account.ACCOUNT_NAME));
@@ -59,6 +59,11 @@ public class AccountDao {
         }
         return list;
     }
+
+    public static int deleteAll() {
+        return AccountDBHelper.getInstance().getWritableDatabase().delete(AccountTable.TABLE_NAME, null, null);
+    }
+
 
     public static boolean isExist(Account account) {
         Cursor cursor = null;
