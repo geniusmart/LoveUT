@@ -67,7 +67,6 @@ public class GithubServiceTest {
     @Test
     public void LoggingInterceptor() throws Exception {
 
-        //https://github.com/square/okhttp/wiki/Interceptors
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggingInterceptor())
                 .build();
