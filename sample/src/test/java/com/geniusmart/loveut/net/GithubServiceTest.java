@@ -2,45 +2,81 @@ package com.geniusmart.loveut.net;
 
 import com.geniusmart.loveut.BuildConfig;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowLog;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 public class GithubServiceTest {
 
+    private static final String TAG = "GithubServiceTest";
+
+    GithubService githubService;
+
+    @Before
+    public void setUp(){
+        //输出日志
+        ShadowLog.stream = System.out;
+        githubService = GithubService.Factory.create();
+    }
+
     @Test
-    public void git() throws Exception {
-
-        GithubService githubService = GithubService.Factory.create();
+    public void publicRepositories() throws IOException {
         Call<List<Repository>> call = githubService.publicRepositories("geniusmart");
+        Response<List<Repository>> execute = call.execute();
+        assertTrue(execute.body().size()>0);
+    }
 
+    @Test
+    public void publicRepositoriesEnqueue() throws IOException {
+
+        Call<List<Repository>> call = githubService.publicRepositories("geniusmart");
+        //callback如何测试？？
         call.enqueue(new Callback<List<Repository>>() {
             @Override
             public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
+                ShadowLog.v(TAG,"onResponse");
                 List<Repository> body = response.body();
-                assertTrue(body.size()>0);
+                assertTrue(body.size() > 0);
             }
 
             @Override
             public void onFailure(Call<List<Repository>> call, Throwable t) {
-
+                ShadowLog.v(TAG, "onFailure");
             }
         });
-        //Response<List<Repository>> listResponse = call.execute();
-        //List<Repository> body = listResponse.body();
-
-        //assertTrue(body.size()>0);
     }
 
+
+    @Test
+    public void LoggingInterceptor() throws Exception {
+
+        //https://github.com/square/okhttp/wiki/Interceptors
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new LoggingInterceptor())
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        GithubService githubService = retrofit.create(GithubService.class);
+        githubService.publicRepositories("geniusmart").execute();
+    }
 }
