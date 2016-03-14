@@ -1,14 +1,14 @@
 package com.geniusmart.loveut.sqlite;
 
 import com.geniusmart.loveut.BuildConfig;
+import com.geniusmart.loveut.util.AccountUtil;
 
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 @Config(constants = BuildConfig.class)
 public class AccountDaoTest {
 
-    @Before
+    @After
     public void tearDown(){
         /*
           执行每个test时，实例对象要重置为null，否则会出现如下异常：
@@ -26,29 +26,20 @@ public class AccountDaoTest {
           参考这个issues
           https://github.com/robolectric/robolectric/issues/1890
         */
-        resetSingleton(AccountDBHelper.class, "mAccountDBHelper");
+        AccountUtil.resetSingleton(AccountDBHelper.class, "mAccountDBHelper");
     }
 
-
-    public Account createAccount(String id){
-        Account account = new Account();
-        account.id = id;
-        account.name = "geniusmart";
-        account.email = "loveut@gmail.com";
-        account.password = "123456";
-        return account;
-    }
 
     @Test
     public void save() {
-        Account account = createAccount("1");
+        Account account = AccountUtil.createAccount("1");
         long result = AccountDao.save(account);
         assertTrue(result > 0);
     }
 
     @Test
     public void update(){
-        Account account = createAccount("2");
+        Account account = AccountUtil.createAccount("2");
         AccountDao.save(account);
 
         account.name = "geniusmart_update";
@@ -62,23 +53,13 @@ public class AccountDaoTest {
     @Test
     public void query(){
         AccountDao.deleteAll();
-        AccountDao.save(createAccount("3"));
-        AccountDao.save(createAccount("4"));
-        AccountDao.save(createAccount("5"));
-        AccountDao.save(createAccount("5"));
+        AccountDao.save(AccountUtil.createAccount("3"));
+        AccountDao.save(AccountUtil.createAccount("4"));
+        AccountDao.save(AccountUtil.createAccount("5"));
+        AccountDao.save(AccountUtil.createAccount("5"));
 
         List<Account> accountList = AccountDao.query();
         assertEquals(accountList.size(), 3);
     }
 
-    private void resetSingleton(Class clazz, String fieldName) {
-        Field instance;
-        try {
-            instance = clazz.getDeclaredField(fieldName);
-            instance.setAccessible(true);
-            instance.set(null, null);
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }
-    }
 }
