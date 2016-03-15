@@ -1,6 +1,9 @@
 package com.geniusmart.loveut.net;
 
+import android.util.Log;
+
 import com.geniusmart.loveut.BuildConfig;
+import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +43,10 @@ public class GithubServiceTest {
     public void publicRepositories() throws IOException {
         Call<List<Repository>> call = githubService.publicRepositories("geniusmart");
         Response<List<Repository>> execute = call.execute();
-        assertTrue(execute.body().size()>0);
+
+        List<Repository> list = execute.body();
+        Log.i(TAG,new Gson().toJson(list));
+        assertTrue(list.size()>0);
     }
 
     @Test
@@ -68,7 +74,7 @@ public class GithubServiceTest {
     public void LoggingInterceptor() throws Exception {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new LoggingInterceptor())
+                .addInterceptor(new FekeInterceptor())
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
@@ -77,5 +83,6 @@ public class GithubServiceTest {
                 .build();
         GithubService githubService = retrofit.create(GithubService.class);
         githubService.publicRepositories("geniusmart").execute();
+        githubService.userList("desc").execute();
     }
 }
