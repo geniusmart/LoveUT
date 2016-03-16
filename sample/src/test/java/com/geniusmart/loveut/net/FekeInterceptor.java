@@ -2,7 +2,10 @@ package com.geniusmart.loveut.net;
 
 import android.util.Log;
 
+import com.geniusmart.loveut.util.FileUtil;
+
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -18,36 +21,19 @@ import okhttp3.ResponseBody;
  */
 public class FekeInterceptor implements Interceptor {
 
-
     public String TAG = "FekeInterceptor";
 
-    public static final String RESPONSE_1 = "[{\"id\":52758536,\"name\":\"android-support-23.2-sample\",\"description\":\"Sample Project for Android Support Library 23.2\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"homepage\":\"http://android-developers.blogspot.com/2016/02/android-support-library-232.html\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":true},{\"id\":48989399,\"name\":\"AndroidStudioAndRobolectric\",\"description\":\"Minimal Robolectric and Android Studio example\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"homepage\":\"\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":true},{\"id\":44965598,\"name\":\"custom-touch-examples\",\"description\":\"Collection of example applications to highlight doing custom touch event handling and using GestureDetectors in Android applications.\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":true},{\"id\":32380192,\"name\":\"CustomTouch\",\"description\":\"Android Touch\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":false},{\"id\":52280267,\"name\":\"DailyStudy\",\"description\":\"\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":false},{\"id\":51822817,\"name\":\"DroidPlugin\",\"description\":\"A plugin framework on android,Run any third-party apk without installation, modification or repackage\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"homepage\":\"\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":true},{\"id\":33351891,\"name\":\"geniusmart.github.com\",\"description\":\"个人博客\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":false},{\"id\":42001141,\"name\":\"handler-project\",\"description\":\"\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":false},{\"id\":49635520,\"name\":\"LoveUT\",\"description\":\"Love UT Forever\",\"forks\":3,\"watchers\":10,\"stargazers_count\":10,\"language\":\"Java\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":false},{\"id\":51972602,\"name\":\"MultiWindowSidebar\",\"description\":\"Android: MultiWindowSidebar, a sidebar app that mimics the Samsung MultiWindow FlashBar\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"homepage\":\"\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":true},{\"id\":30139436,\"name\":\"totop\",\"description\":\"\",\"forks\":0,\"watchers\":0,\"stargazers_count\":0,\"language\":\"Java\",\"owner\":{\"id\":7712056,\"url\":\"https://api.github.com/users/geniusmart\",\"login\":\"geniusmart\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/7712056?v\\u003d3\"},\"fork\":false}]";
+    private final String jsonPath;
+    private List<String> pathSegments;
+
+    public FekeInterceptor(String jsonPath) {
+        this.jsonPath = jsonPath;
+    }
 
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
 
-        String responseString = RESPONSE_1;
-
-        HttpUrl uri = chain.request().url();
-        Log.i(TAG, "uri=" + uri.toString());
-        if (uri.toString().equals("/path/of/interest")) {
-            responseString = "";
-        } else {
-            responseString = RESPONSE_1;
-        }
-
-        // Get Query String.
-        //final String query = uri.query();
-        // Parse the Query String.final String[] parsedQuery = query.split("=");
-       /* if(parsedQuery[0].equalsIgnoreCase("id") && parsedQuery[1].equalsIgnoreCase("1")) {
-            responseString = TEACHER_ID_1;
-        }
-        else if(parsedQuery[0].equalsIgnoreCase("id") && parsedQuery[1].equalsIgnoreCase("2")){
-            responseString = TEACHER_ID_2;
-        }
-        else {
-            responseString = "";
-        }*/
+        String responseString = createResponseBody(chain);
 
         Response response = new Response.Builder()
                 .code(200)
@@ -58,6 +44,48 @@ public class FekeInterceptor implements Interceptor {
                 .addHeader("content-type", "application/json")
                 .build();
         return response;
+    }
+
+    /**
+     * 读文件获取json，生成ResponseBody
+     *
+     * @param chain
+     * @return
+     */
+    private String createResponseBody(Chain chain) {
+
+        String responseString = null;
+
+        HttpUrl uri = chain.request().url();
+        pathSegments = uri.pathSegments();
+
+        Log.i(TAG, "uri=" + uri.toString());
+        Log.i(TAG, "pathSegments=" + pathSegments);
+
+        //可根据请求的路径分段pathSegments和请求参数queryParameterNames来区分路径
+        switch (pathSegments.size()) {
+            case 2:
+                if (equals("users", 0)) { //users/{username}
+                    responseString = getResponseString("users.json");
+                }
+                break;
+            case 3:
+                if (equals("users", 0) && equals("repos", 2)) {//users/{username}/repos
+                    responseString = getResponseString("users_repos.json");
+                } else if (equals("users", 0) && equals("following", 2)) {
+                    responseString = getResponseString("users_following.json");
+                }
+                break;
+        }
+        return responseString;
+    }
+
+    private boolean equals(String pathSegment, int pathSegmentIndex) {
+        return pathSegment.equals(pathSegments.get(pathSegmentIndex));
+    }
+
+    private String getResponseString(String fileName) {
+        return FileUtil.readFile(jsonPath + fileName, "UTF-8").toString();
     }
 
 }
