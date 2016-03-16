@@ -16,14 +16,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -31,9 +27,6 @@ import static org.junit.Assert.assertTrue;
 public class GithubServiceTest {
 
     private static final String TAG = "GithubServiceTest";
-    private static final String JSON_ROOT_PATH = "/json/";
-    private String jsonFullPath;
-
     GithubService githubService;
 
     @Before
@@ -41,7 +34,6 @@ public class GithubServiceTest {
         //输出日志
         ShadowLog.stream = System.out;
         githubService = GithubService.Factory.create();
-        jsonFullPath = getClass().getResource(JSON_ROOT_PATH).toURI().getPath();
     }
 
     @Test
@@ -72,29 +64,5 @@ public class GithubServiceTest {
                 ShadowLog.v(TAG, "onFailure");
             }
         });
-    }
-
-
-    @Test
-    public void LoggingInterceptor() throws Exception {
-
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new FekeInterceptor(jsonFullPath))
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(GithubService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build();
-        GithubService githubService = retrofit.create(GithubService.class);
-
-        Response<List<Repository>> repositoryResponse = githubService.publicRepositories("geniusmart").execute();
-        assertEquals(repositoryResponse.body().get(5).name, "LoveUT");
-
-        Response<List<User>> followingResponse = githubService.followingUser("geniusmart").execute();
-        assertEquals(followingResponse.body().get(0).login,"JakeWharton");
-
-        Response<User> userResponse = githubService.user("geniusmart").execute();
-        assertEquals(userResponse.body().login,"geniusmart");
     }
 }
