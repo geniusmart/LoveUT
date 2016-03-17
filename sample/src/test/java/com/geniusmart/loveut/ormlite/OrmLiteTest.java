@@ -18,27 +18,34 @@ import static junit.framework.Assert.assertEquals;
 @Config(constants = BuildConfig.class)
 public class OrmLiteTest {
 
+    DatabaseHelper helper;
+    Dao<SimpleData, Integer> dao;
 
     @Before
-    public void setUp() {
-
+    public void setUp() throws SQLException {
+        helper = DatabaseHelper.getHelper();
+        dao = helper.getDao();
     }
 
     @Test
     public void save() throws SQLException {
-
-        DatabaseHelper helper = DatabaseHelper.getHelper();
-        Dao<SimpleData, Integer> dao = helper.getDao();
 
         long millis = System.currentTimeMillis();
         dao.create(new SimpleData(millis));
         dao.create(new SimpleData(millis + 1));
         dao.create(new SimpleData(millis + 2));
 
+        assertEquals(dao.countOf(), 3);
+
         List<SimpleData> simpleDatas = dao.queryForAll();
-        assertEquals(simpleDatas.size(), 3);
         assertEquals(simpleDatas.get(0).millis, millis);
         assertEquals(simpleDatas.get(1).string, ((millis + 1) % 1000) + "ms");
         assertEquals(simpleDatas.get(2).millis, millis + 2);
+    }
+
+    @Test
+    public void queryForId() throws SQLException {
+        long millis = System.currentTimeMillis();
+        dao.create(new SimpleData(millis));
     }
 }
