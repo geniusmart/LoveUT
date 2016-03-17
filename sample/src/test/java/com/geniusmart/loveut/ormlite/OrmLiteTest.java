@@ -3,6 +3,7 @@ package com.geniusmart.loveut.ormlite;
 import com.geniusmart.loveut.BuildConfig;
 import com.j256.ormlite.dao.Dao;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class)
@@ -25,6 +27,11 @@ public class OrmLiteTest {
     public void setUp() throws SQLException {
         helper = DatabaseHelper.getHelper();
         dao = helper.getDao();
+    }
+
+    @After
+    public void tearDown(){
+        DatabaseHelper.releaseHelper();
     }
 
     @Test
@@ -46,6 +53,7 @@ public class OrmLiteTest {
     @Test
     public void queryForId() throws SQLException {
         long millis = System.currentTimeMillis();
-        dao.create(new SimpleData(millis));
+        SimpleData simpleData = dao.createIfNotExists(new SimpleData(millis));
+        assertNotNull(dao.queryForId(simpleData.id));
     }
 }
