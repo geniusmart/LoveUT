@@ -15,18 +15,19 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
+ * 网络请求的拦截器，用于Mock响应数据
  * 参考文章：
  * http://stackoverflow.com/questions/17544751/square-retrofit-server-mock-for-testing
  * https://github.com/square/okhttp/wiki/Interceptors
  */
-public class FekeInterceptor implements Interceptor {
+public class MockInterceptor implements Interceptor {
 
-    public String TAG = "FekeInterceptor";
+    public String TAG = "MockInterceptor";
 
     private final String jsonPath;
     private List<String> pathSegments;
 
-    public FekeInterceptor(String jsonPath) {
+    public MockInterceptor(String jsonPath) {
         this.jsonPath = jsonPath;
     }
 
@@ -47,7 +48,7 @@ public class FekeInterceptor implements Interceptor {
     }
 
     /**
-     * 读文件获取json，生成ResponseBody
+     * 读文件获取json字符串，生成ResponseBody
      *
      * @param chain
      * @return

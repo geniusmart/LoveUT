@@ -5,7 +5,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
@@ -22,8 +21,6 @@ public class AccountProvider extends ContentProvider {
 
     private static final UriMatcher MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
-    private SQLiteDatabase mSqLiteDatabase;
-
     static {
         MATCHER.addURI(AUTHORITIE, AccountTable.TABLE_NAME, MATCH_CODE_ITEM);
         MATCHER.addURI(AUTHORITIE, AccountTable.TABLE_NAME + "/#", MATCH_CODE_ITEM_ID);
@@ -31,7 +28,6 @@ public class AccountProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mSqLiteDatabase = AccountDBHelper.getInstance().getWritableDatabase();
         return true;
     }
 
@@ -39,10 +35,12 @@ public class AccountProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         switch (MATCHER.match(uri)) {
             case MATCH_CODE_ITEM:
-                return mSqLiteDatabase.query(AccountTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                return AccountDBHelper.getInstance().getWritableDatabase().query(AccountTable.TABLE_NAME,
+                        projection, selection, selectionArgs, null, null, sortOrder);
             case MATCH_CODE_ITEM_ID:
                 String id = uri.getPathSegments().get(1);
-                return mSqLiteDatabase.query(AccountTable.TABLE_NAME, projection, AccountTable.ACCOUNT_ID + "=?", new String[]{id}, null, null, sortOrder);
+                return AccountDBHelper.getInstance().getWritableDatabase().query(AccountTable.TABLE_NAME,
+                        projection, AccountTable.ACCOUNT_ID + "=?", new String[]{id}, null, null, sortOrder);
             default:
                 Log.i(TAG, "didn't match anything");
                 break;
@@ -57,7 +55,8 @@ public class AccountProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long rowid = mSqLiteDatabase.insert(AccountTable.TABLE_NAME, null, values);
+        long rowid = AccountDBHelper.getInstance().getWritableDatabase().insert(AccountTable.TABLE_NAME,
+                null, values);
         Uri insertUri = ContentUris.withAppendedId(uri, rowid);
         return insertUri;
     }
@@ -69,6 +68,7 @@ public class AccountProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return mSqLiteDatabase.update(AccountTable.TABLE_NAME, values, selection, selectionArgs);
+        return AccountDBHelper.getInstance().getWritableDatabase().update(AccountTable.TABLE_NAME,
+                values, selection, selectionArgs);
     }
 }

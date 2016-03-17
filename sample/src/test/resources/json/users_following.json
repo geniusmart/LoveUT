@@ -36,5 +36,17 @@
     "received_events_url": "https://api.github.com/users/Trinea/received_events",
     "type": "User",
     "site_admin": false
+  },
+  {
+    "login": "daimajia",
+    "id": 2503423
+  },
+  {
+    "login": "liaohuqiu",
+    "id": 4088573
+  },
+  {
+    "login": "stormzhang",
+    "id": 2267900
   }
 ]

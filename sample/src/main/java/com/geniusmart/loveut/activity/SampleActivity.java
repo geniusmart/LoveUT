@@ -11,8 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geniusmart.loveut.R;
-import com.geniusmart.loveut.sqlite.Account;
-import com.geniusmart.loveut.sqlite.AccountDao;
 
 public class SampleActivity extends FragmentActivity {
 
@@ -63,14 +61,8 @@ public class SampleActivity extends FragmentActivity {
         }, 2000);
     }
 
-    public void createDB(View view) {
-        Account account = new Account();
-        account.id = "1";
-        account.name = "geniusmart";
-        account.email = "loveut@gmail.com";
-        account.password = "123456";
-        AccountDao.isExist(account);
-        Toast.makeText(this,"success",Toast.LENGTH_SHORT).show();
+    public void callback(View view) {
+        startActivity(new Intent(this,CallbackActivity.class));
     }
 
     @Override
