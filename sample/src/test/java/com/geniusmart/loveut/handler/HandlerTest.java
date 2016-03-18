@@ -13,6 +13,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowHandler;
+import org.robolectric.shadows.ShadowLog;
 import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.util.Transcript;
 
@@ -31,6 +32,7 @@ import static org.robolectric.internal.Shadow.newInstanceOf;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class HandlerTest {
 
+    private String TAG = "HandlerTest";
     private Transcript transcript;
     TestRunnable scratchRunnable = new TestRunnable();
 
@@ -47,6 +49,7 @@ public class HandlerTest {
     @Before
     public void setUp() throws Exception {
         transcript = new Transcript();
+        ShadowLog.stream = System.out;
     }
 
     @Test
