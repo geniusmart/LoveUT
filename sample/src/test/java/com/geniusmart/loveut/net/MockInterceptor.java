@@ -1,11 +1,8 @@
 package com.geniusmart.loveut.net;
 
-import android.util.Log;
-
 import com.geniusmart.loveut.util.FileUtil;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -22,13 +19,10 @@ import okhttp3.ResponseBody;
  */
 public class MockInterceptor implements Interceptor {
 
-    public String TAG = "MockInterceptor";
+    private final String responeJsonPath;
 
-    private final String jsonPath;
-    private List<String> pathSegments;
-
-    public MockInterceptor(String jsonPath) {
-        this.jsonPath = jsonPath;
+    public MockInterceptor(String responeJsonPath) {
+        this.responeJsonPath = responeJsonPath;
     }
 
     @Override
@@ -58,35 +52,20 @@ public class MockInterceptor implements Interceptor {
         String responseString = null;
 
         HttpUrl uri = chain.request().url();
-        pathSegments = uri.pathSegments();
+        String path = uri.url().getPath();
 
-        Log.i(TAG, "uri=" + uri.toString());
-        Log.i(TAG, "pathSegments=" + pathSegments);
-
-        //可根据请求的路径分段pathSegments和请求参数queryParameterNames来区分路径
-        switch (pathSegments.size()) {
-            case 2:
-                if (equals("users", 0)) { //users/{username}
-                    responseString = getResponseString("users.json");
-                }
-                break;
-            case 3:
-                if (equals("users", 0) && equals("repos", 2)) {//users/{username}/repos
-                    responseString = getResponseString("users_repos.json");
-                } else if (equals("users", 0) && equals("following", 2)) {
-                    responseString = getResponseString("users_following.json");
-                }
-                break;
+        if (path.matches("^(/users/)+[^/]*+(/repos)$")) {//匹配/users/{username}/repos
+            responseString = getResponseString("users_repos.json");
+        } else if (path.matches("^(/users/)+[^/]+(/following)$")) {//匹配/users/{username}/following
+            responseString = getResponseString("users_following.json");
+        } else if (path.matches("^(/users/)+[^/]*+$")) {//匹配/users/{username}
+            responseString = getResponseString("users.json");
         }
         return responseString;
     }
 
-    private boolean equals(String pathSegment, int pathSegmentIndex) {
-        return pathSegment.equals(pathSegments.get(pathSegmentIndex));
-    }
-
     private String getResponseString(String fileName) {
-        return FileUtil.readFile(jsonPath + fileName, "UTF-8").toString();
+        return FileUtil.readFile(responeJsonPath + fileName, "UTF-8").toString();
     }
 
 }

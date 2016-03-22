@@ -17,9 +17,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -42,27 +42,10 @@ public class GithubServiceTest {
         Response<List<Repository>> execute = call.execute();
 
         List<Repository> list = execute.body();
+        //可输出完整的响应结果，帮助我们调试代码
         Log.i(TAG,new Gson().toJson(list));
-        assertTrue(list.size()>0);
+        assertTrue(list.size() > 0);
+        assertNotNull(list.get(0).name);
     }
 
-    @Test
-    public void publicRepositoriesEnqueue() throws IOException {
-
-        Call<List<Repository>> call = githubService.publicRepositories("geniusmart");
-        //callback如何测试？？
-        call.enqueue(new Callback<List<Repository>>() {
-            @Override
-            public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
-                ShadowLog.v(TAG,"onResponse");
-                List<Repository> body = response.body();
-                assertTrue(body.size() > 0);
-            }
-
-            @Override
-            public void onFailure(Call<List<Repository>> call, Throwable t) {
-                ShadowLog.v(TAG, "onFailure");
-            }
-        });
-    }
 }

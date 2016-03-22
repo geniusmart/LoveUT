@@ -52,7 +52,6 @@ public class AccountDaoTest {
 
     @Test
     public void query(){
-        AccountDao.deleteAll();
         AccountDao.save(AccountUtil.createAccount("3"));
         AccountDao.save(AccountUtil.createAccount("4"));
         AccountDao.save(AccountUtil.createAccount("5"));

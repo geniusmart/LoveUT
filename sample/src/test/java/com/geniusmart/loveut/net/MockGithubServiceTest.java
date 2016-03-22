@@ -35,7 +35,7 @@ public class MockGithubServiceTest {
 
     private static final String JSON_ROOT_PATH = "/json/";
     private String jsonFullPath;
-    GithubService githubService;
+    GithubService mockGithubService;
 
     @Before
     public void setUp() throws URISyntaxException {
@@ -45,34 +45,36 @@ public class MockGithubServiceTest {
         //获取测试json文件地址
         jsonFullPath = getClass().getResource(JSON_ROOT_PATH).toURI().getPath();
 
+        //定义Http Client,并添加拦截器
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new MockInterceptor(jsonFullPath))
                 .build();
 
+        //设置Http Client
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(GithubService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
 
-        githubService = retrofit.create(GithubService.class);
+        mockGithubService = retrofit.create(GithubService.class);
     }
 
     @Test
     public void mockPublicRepositories() throws Exception {
-        Response<List<Repository>> repositoryResponse = githubService.publicRepositories("geniusmart").execute();
+        Response<List<Repository>> repositoryResponse = mockGithubService.publicRepositories("geniusmart").execute();
         assertEquals(repositoryResponse.body().get(5).name, "LoveUT");
     }
 
     @Test
     public void mockFollowingUser() throws Exception {
-        Response<List<User>> followingResponse = githubService.followingUser("geniusmart").execute();
+        Response<List<User>> followingResponse = mockGithubService.followingUser("geniusmart").execute();
         assertEquals(followingResponse.body().get(0).login,"JakeWharton");
     }
 
     @Test
     public void mockUser() throws Exception {
-        Response<User> userResponse = githubService.user("geniusmart").execute();
+        Response<User> userResponse = mockGithubService.user("geniusmart").execute();
         assertEquals(userResponse.body().login,"geniusmart");
     }
 
@@ -80,9 +82,11 @@ public class MockGithubServiceTest {
     public void callback() throws IOException {
         CallbackActivity callbackActivity = Robolectric.setupActivity(CallbackActivity.class);
         ListView listView = (ListView) callbackActivity.findViewById(R.id.listView);
-        callbackActivity.getCallback().onResponse(null, githubService.followingUser("geniusmart").execute());
+        Response<List<User>> users = mockGithubService.followingUser("geniusmart").execute();
+        //结合模拟的响应数据，执行回调函数
+        callbackActivity.getCallback().onResponse(null, users);
         ListAdapter listAdapter = listView.getAdapter();
-
+        //对ListView的item进行断言
         assertEquals(listAdapter.getItem(0).toString(), "JakeWharton");
         assertEquals(listAdapter.getItem(1).toString(), "Trinea");
 

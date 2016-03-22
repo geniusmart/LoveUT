@@ -25,6 +25,9 @@ public class CallbackActivity extends Activity {
     private ListView listView;
     private List<String> datas;
     private ProgressBar progressBar;
+    /**
+     * 定义一个全局的callback对象，并暴露出get方法供UT调用
+     */
     private Callback<List<User>> callback;
 
     @Override
@@ -40,12 +43,14 @@ public class CallbackActivity extends Activity {
                 Toast.makeText(CallbackActivity.this,datas.get(position),Toast.LENGTH_SHORT).show();
             }
         });
+        //加载数据
         loadData();
     }
 
     public void loadData() {
         progressBar.setVisibility(View.VISIBLE);
         datas = new ArrayList<>();
+        //初始化回调函数对象
         callback = new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {

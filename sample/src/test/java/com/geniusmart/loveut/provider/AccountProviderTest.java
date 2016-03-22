@@ -42,9 +42,11 @@ public class AccountProviderTest {
 
         mProvider = new AccountProvider();
         mContentResolver = RuntimeEnvironment.application.getContentResolver();
+        //创建ContentResolver的Shadow对象
         mShadowContentResolver = Shadows.shadowOf(mContentResolver);
 
         mProvider.onCreate();
+        //注册ContentProvider对象和对应的AUTHORITY
         ShadowContentResolver.registerProvider(AUTHORITY, mProvider);
     }
 
