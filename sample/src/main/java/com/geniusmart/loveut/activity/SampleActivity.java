@@ -3,6 +3,7 @@ package com.geniusmart.loveut.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -15,6 +16,7 @@ public class SampleActivity extends FragmentActivity {
 
     private TextView lifecycleTextView;
     private CheckBox inverseCheckBox;
+    public boolean isTaskFinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,19 @@ public class SampleActivity extends FragmentActivity {
 
     public void showDemo(View view){
         forward(view);
+    }
+
+    public void executeDelayedTask(View view) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isTaskFinish = true;
+            }
+        }, 2000);
+    }
+
+    public void callback(View view) {
+        startActivity(new Intent(this,CallbackActivity.class));
     }
 
     @Override

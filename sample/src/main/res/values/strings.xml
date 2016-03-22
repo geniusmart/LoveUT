@@ -32,4 +32,5 @@
     <string name="sample_dialog_title">标题</string>
 
     <string name="sample_fragment">fragment区域</string>
+    <string name="title_activity_callback">CallbackActivity</string>
 </resources>

@@ -24,11 +24,13 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
+import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowToast;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 import org.robolectric.util.ActivityController;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -166,5 +168,17 @@ public class SampleActivityTest {
         //此api可以主动添加Fragment到Activity中，因此会触发Fragment的onCreateView()
         SupportFragmentTestUtil.startFragment(sampleFragment);
         assertNotNull(sampleFragment.getView());
+    }
+
+    /**
+     * 测试DelayedTask
+     */
+    @Test
+    public void testDelayedTask(){
+        Button delayedTaskBtn = (Button) sampleActivity.findViewById(R.id.btn_delay_task);
+        assertFalse(sampleActivity.isTaskFinish);
+        delayedTaskBtn.performClick();
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
+        assertTrue(sampleActivity.isTaskFinish);
     }
 }
