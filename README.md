@@ -30,4 +30,4 @@ Robolectric3.0的介绍和实战
 
 ## 更多关于此工程的介绍，查看以下博客
 * [Android单元测试框架Robolectric3.0介绍(一)](http://www.jianshu.com/p/9d988a2f8ff7)
-* [Android单元测试框架Robolectric3.0介绍(二)](http://www.jianshu.com/p/9d988a2f8ff7)
+* [Android单元测试框架Robolectric3.0介绍(二)](http://www.jianshu.com/p/3aa0e4efcfd3)
