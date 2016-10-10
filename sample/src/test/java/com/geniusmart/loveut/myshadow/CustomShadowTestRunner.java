@@ -1,4 +1,6 @@
-package com.geniusmart.loveut.shadow;
+package com.geniusmart.loveut.myshadow;
+
+import com.geniusmart.loveut.shadow.Person;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -16,7 +18,9 @@ public class CustomShadowTestRunner extends RobolectricGradleTestRunner {
         /**
          * 添加要进行Shadow的对象
          */
+        builder.addInstrumentedPackage(Person.class.getPackage().getName());
         builder.addInstrumentedClass(Person.class.getName());
+
         return builder.build();
     }
 }

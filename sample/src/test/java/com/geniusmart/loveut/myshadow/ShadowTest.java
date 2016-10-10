@@ -1,10 +1,11 @@
-package com.geniusmart.loveut.shadow;
+package com.geniusmart.loveut.myshadow;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.geniusmart.loveut.BuildConfig;
 import com.geniusmart.loveut.activity.MainActivity;
+import com.geniusmart.loveut.shadow.Person;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,10 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertEquals;
 
+/**
+ * 注：使用自定义Shadow时，测试类的包名不能与被Shadow的类的包名一致，否则会出问题
+ * 如：http://stackoverflow.com/questions/18976851/robolectrictestrunner-test-class-can-only-have-one-constructor
+ */
 @RunWith(CustomShadowTestRunner.class)
 @Config(constants = BuildConfig.class,shadows = {ShadowPerson.class})
 public class ShadowTest {
