@@ -1,10 +1,11 @@
-package com.geniusmart.loveut.shadow;
+package com.geniusmart.loveut.myshadow;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.geniusmart.loveut.BuildConfig;
 import com.geniusmart.loveut.activity.MainActivity;
+import com.geniusmart.loveut.shadow.Person;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

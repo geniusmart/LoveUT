@@ -1,4 +1,6 @@
-package com.geniusmart.loveut.shadow;
+package com.geniusmart.loveut.myshadow;
+
+import com.geniusmart.loveut.shadow.Person;
 
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
