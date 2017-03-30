@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
@@ -26,8 +26,8 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertEquals;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class , sdk = 21)
 public class AccountProviderTest {
 
     private ContentResolver mContentResolver;
@@ -47,7 +47,7 @@ public class AccountProviderTest {
 
         mProvider.onCreate();
         //注册ContentProvider对象和对应的AUTHORITY
-        ShadowContentResolver.registerProvider(AUTHORITY, mProvider);
+        ShadowContentResolver.registerProviderInternal(AUTHORITY, mProvider);
     }
 
     @After

@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowListView;
@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 public class MockGithubServiceTest {
 
@@ -80,7 +80,7 @@ public class MockGithubServiceTest {
 
     @Test
     public void callback() throws IOException {
-        CallbackActivity callbackActivity = Robolectric.setupActivity(CallbackActivity.class);
+        CallbackActivity callbackActivity = Robolectric.buildActivity(CallbackActivity.class).create().get();
         ListView listView = (ListView) callbackActivity.findViewById(R.id.listView);
         Response<List<User>> users = mockGithubService.followingUser("geniusmart").execute();
         //结合模拟的响应数据，执行回调函数

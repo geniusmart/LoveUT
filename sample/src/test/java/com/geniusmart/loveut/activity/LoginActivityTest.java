@@ -11,18 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class , sdk = 21)
 public class LoginActivityTest {
 
     private EditText emailView;
@@ -56,7 +57,7 @@ public class LoginActivityTest {
         assertThat("Show error for Email field ", emailView.getError(), is(notNullValue()));
         assertThat("Show error for Password field ", passwordView.getError(), is(notNullValue()));
 
-        assertEquals(emailView.getError().toString(),application.getString(R.string.error_field_required));
+        assertEquals(emailView.getError().toString(), RuntimeEnvironment.application.getString(R.string.error_field_required));
     }
 
     @Test

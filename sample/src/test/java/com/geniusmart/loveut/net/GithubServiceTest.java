@@ -1,14 +1,15 @@
 package com.geniusmart.loveut.net;
 
+import com.google.gson.Gson;
+
 import android.util.Log;
 
 import com.geniusmart.loveut.BuildConfig;
-import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
@@ -22,7 +23,7 @@ import retrofit2.Response;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 public class GithubServiceTest {
 

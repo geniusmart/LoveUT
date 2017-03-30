@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
@@ -34,8 +34,8 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class , sdk = 21)
 public class SampleActivityTest {
 
     private SampleActivity sampleActivity;
@@ -78,6 +78,7 @@ public class SampleActivityTest {
 
     /**
      * Activity跳转测试
+     * Robolectric 3.0 和 3.1 关于Intent的 测试变化参加以下issue：https://github.com/robolectric/robolectric/issues/2521
      */
     @Test
     public void testStartActivity() {
@@ -85,7 +86,7 @@ public class SampleActivityTest {
         forwardBtn.performClick();
         Intent expectedIntent = new Intent(sampleActivity, LoginActivity.class);
         Intent actualIntent = ShadowApplication.getInstance().getNextStartedActivity();
-        assertEquals(expectedIntent, actualIntent);
+        assertEquals(expectedIntent.getComponent(), actualIntent.getComponent());
     }
 
     /**
@@ -155,7 +156,7 @@ public class SampleActivityTest {
         //以下测试广播接受者的处理逻辑是否正确
         MyReceiver myReceiver = new MyReceiver();
         myReceiver.onReceive(RuntimeEnvironment.application, intent);
-        SharedPreferences preferences = shadowApplication.getSharedPreferences("account", Context.MODE_PRIVATE);
+        SharedPreferences preferences = RuntimeEnvironment.application.getSharedPreferences("account", Context.MODE_PRIVATE);
         assertEquals("geniusmart", preferences.getString("USERNAME", ""));
     }
 
