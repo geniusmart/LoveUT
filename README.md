@@ -33,7 +33,7 @@ Robolectric 3.x 的介绍和实战
 * [retrofit2](http://square.github.io/retrofit/)
 * [ormlite](http://ormlite.com/)
 * [mockito](http://mockito.org/)
-* [robolectric3.0](http://robolectric.org)
+* [robolectric3.1.4](http://robolectric.org)
 
 ## 更多关于此工程的介绍，查看以下博客
 * [Android单元测试框架Robolectric3.0介绍(一)](http://www.jianshu.com/p/9d988a2f8ff7)
