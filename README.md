@@ -1,5 +1,12 @@
-Robolectric3.0的介绍和实战
-=====================
+Robolectric 3.x 的介绍和实战
+======================
+
+## 当前Robolectric 版本
+* 3.1.4
+* 其他版本请查看分支
+
+## Branch
+* [LoveUT-Robolectric-3.0](https://github.com/geniusmart/LoveUT/tree/LoveUT-Robolectric-3.0)
 
 ## 项目包含以下Android代码的测试
 1. Activity
