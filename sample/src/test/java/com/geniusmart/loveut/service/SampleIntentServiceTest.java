@@ -8,15 +8,17 @@ import com.geniusmart.loveut.BuildConfig;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboSharedPreferences;
+import org.robolectric.util.ServiceController;
 
 import static junit.framework.Assert.assertEquals;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class , sdk = 21)
 public class SampleIntentServiceTest {
 
     @Test
@@ -26,9 +28,9 @@ public class SampleIntentServiceTest {
         RoboSharedPreferences preferences = (RoboSharedPreferences) application
                 .getSharedPreferences("example", Context.MODE_PRIVATE);
 
-        SampleIntentService registrationService = new SampleIntentService();
+        ServiceController<SampleIntentService> serviceController = Robolectric.buildService(SampleIntentService.class);
 
-        registrationService.onHandleIntent(new Intent());
+        serviceController.get().onHandleIntent(new Intent());
 
         assertEquals(preferences.getString("SAMPLE_DATA", ""), "sample data");
     }

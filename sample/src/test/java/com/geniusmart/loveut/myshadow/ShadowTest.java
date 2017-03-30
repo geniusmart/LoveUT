@@ -10,6 +10,7 @@ import com.geniusmart.loveut.shadow.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
@@ -26,8 +27,8 @@ import static junit.framework.TestCase.assertEquals;
  * 注：使用自定义Shadow时，测试类的包名不能与被Shadow的类的包名一致，否则会出问题
  * 如：http://stackoverflow.com/questions/18976851/robolectrictestrunner-test-class-can-only-have-one-constructor
  */
-@RunWith(CustomShadowTestRunner.class)
-@Config(constants = BuildConfig.class,shadows = {ShadowPerson.class})
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class,shadows = {ShadowPerson.class},sdk = 21)
 public class ShadowTest {
 
     /**
